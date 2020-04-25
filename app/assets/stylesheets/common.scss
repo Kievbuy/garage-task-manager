@@ -1,0 +1,22 @@
+.btn-custom {
+  padding: 15px 50px;
+  background: linear-gradient(#5084BC, #285799);
+  border-radius: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+  position: relative;
+
+  &:hover {
+    text-decoration: none;
+    color: lightgray;
+    background: linear-gradient(#285799, #00008B);
+  }
+}
+
+.plus {
+  position: absolute;
+  color: lightgrey;
+  left: 12px;
+  top: 17px;
+}
