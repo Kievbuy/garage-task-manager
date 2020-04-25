@@ -1,27 +1,65 @@
-<p id="notice"><%= notice %></p>
+<p id="notice text-center"><%= notice %></p>
 
-<h1 class="main-title">Simple todo list</h1>
-<h3 class="secondary-title">from ruby garage</h3>
-
-<br>
-
-<% @projects.each do |project| %>
-
-  <div class="card">
-    <div class="card-header">
-      <%= link_to 'New Task', new_task_path, class: 'btn btn-warning' %>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
-
-  <br>
-
-<% end %>
+<div class='title-block'>
+  <h1 class="main-title">Simple todo list</h1>
+  <h3 class="secondary-title">from ruby garage</h3>
+</div>
 
 <br>
 
-<%= link_to '<i class="fa fa-plus plus"></i> Add TODO List'.html_safe, new_project_path, class: 'btn-custom' %>
+<div class='project-list'>
+  <% @projects.each do |project| %>
+
+    <div class="card">
+      <div class="project-header">
+          <div class="calendar-icon"><i class="fa fa-calendar"></i></div>
+          <div class="project-name"><p><%= project.name %></p></div>
+          <div class="remove-icon"><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, project_path(project), method: :delete, data: { confirm: 'Confirm?' } %></div>
+          <div class="edit-icon"><%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_project_path(project) %></div>
+      </div>
+      <div class="new-task">
+        <div class="custom-file">
+          <i class="fa fa-plus green-plus"></i>
+          <%= form_with model: project.tasks.build, remote: true do |f| %>
+            <%= f.submit 'Add Task', class: 'btn btn-success task-button' %>
+            <%= f.text_field :name, class: 'form-control task-field' %>
+            <%= f.hidden_field :project_id, value: project.id %>
+          <% end %>
+        </div>
+      </DIV>
+      <div class="card-body">
+        <table class='table table-bordered'>
+          <% project.tasks.order(:is_done).each do |task| %>
+            <% next if task.new_record? %>
+            <tr>
+              <td width="50">
+                <%= link_to "<input type='checkbox' #{task.is_done ? 'checked' : ''}>".html_safe, task_path(task, "task[is_done]": !task.is_done), method: :patch, remote: true %>
+              </td>
+              <td class="<%= "done-#{task.is_done}" %>"><%= task.name %></td>
+              <td width="115">
+                <% unless task.is_done %>
+                  <div class="remove-icon"><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, task_path(task), method: :delete, data: { confirm: 'Confirm?' } %></div>
+                  <div class="edit-icon"><%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_task_path(task) %></div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <br>
+
+  <% end %>
+</div>
+
+<br>
+
+<div class='button-block'>
+  <%= link_to '<i class="fa fa-plus plus"></i> Add TODO List'.html_safe, new_project_path, class: 'btn-custom' %>
+
+  <div class='clearfix'></div>
+
+  <p id='copy'>&copy; Ruby Garage</p>
+
+</div>

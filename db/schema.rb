@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_134612) do
 
   create_table "tasks", force: :cascade do |t|
     t.text "name"
-    t.integer "status", default: 0
+    t.boolean "is_done", default: false
     t.integer "priority", default: 1
     t.bigint "project_id"
     t.bigint "user_id"
