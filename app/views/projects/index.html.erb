@@ -22,7 +22,7 @@
           <i class="fa fa-plus green-plus"></i>
           <%= form_with model: project.tasks.build, remote: true do |f| %>
             <%= f.submit 'Add Task', class: 'btn btn-success task-button' %>
-            <%= f.text_field :name, class: 'form-control task-field' %>
+            <%= f.text_field :name, class: 'form-control task-field', required: true %>
             <%= f.hidden_field :project_id, value: project.id %>
           <% end %>
         </div>
@@ -57,9 +57,5 @@
 
 <div class='button-block'>
   <%= link_to '<i class="fa fa-plus plus"></i> Add TODO List'.html_safe, new_project_path, class: 'btn-custom' %>
-
-  <div class='clearfix'></div>
-
-  <p id='copy'>&copy; Ruby Garage</p>
 
 </div>

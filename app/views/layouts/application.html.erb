@@ -15,5 +15,15 @@
         <%= yield %>
       </div>
     </div>
+
+    <div class='clearfix'></div>
+    <br>
+    <div class='text-center'>
+      <% if @current_user %>
+        <%= link_to "<i class='fa fa-sign-out' aria-hidden='true'></i> Sign Out".html_safe, destroy_user_session_path, method: :delete %>
+      <% end %>
+      <p id='copy'>&copy; Ruby Garage</p>
+      <br>
+    </div>
   </body>
 </html>
